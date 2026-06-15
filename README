@@ -1,0 +1,37 @@
+# 🚀 Spacio
+
+Spacio is a modern cloud storage and file management platform designed to help users securely store, organize, access, and manage their digital files through an intuitive and responsive interface.
+
+The application provides secure user authentication, file uploading, categorization, search capabilities, storage insights, and seamless file management. Built using Next.js, TypeScript, Appwrite, Tailwind CSS, and Shadcn UI, Spacio demonstrates full-stack development concepts including authentication, cloud storage integration, database management, and responsive user experience design.
+
+## Key Features
+
+* Secure user authentication
+* File upload and storage management
+* Categorized file organization
+* Advanced file search
+* Storage analytics dashboard
+* Download and management options
+* Responsive modern interface
+* Cloud-based backend powered by Appwrite
+
+## Tech Stack
+
+* Next.js
+* TypeScript
+* Appwrite
+* Tailwind CSS
+* Shadcn UI
+* React
+
+## Learning Outcomes
+
+This project strengthened my understanding of:
+
+* Full-stack web development
+* Authentication and authorization
+* Cloud storage systems
+* Database integration
+* Modern React and Next.js architecture
+* Responsive UI/UX development
+* Type-safe application development with TypeScript
