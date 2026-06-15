@@ -1,0 +1,6 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript","stsndard","plugin:tailwindcss/recommended","prettier"],
+  "rules": {
+    "no-undef": "off"
+  }
+}
