@@ -1,37 +1,334 @@
-# 🚀 Spacio
+# Spacio – Cloud Storage Management Platform
 
-Spacio is a modern cloud storage and file management platform designed to help users securely store, organize, access, and manage their digital files through an intuitive and responsive interface.
+## Overview
 
-The application provides secure user authentication, file uploading, categorization, search capabilities, storage insights, and seamless file management. Built using Next.js, TypeScript, Appwrite, Tailwind CSS, and Shadcn UI, Spacio demonstrates full-stack development concepts including authentication, cloud storage integration, database management, and responsive user experience design.
+Spacio is a modern cloud-based file storage and management platform designed to provide secure file organization, sharing, and storage analytics. Built using Next.js and Appwrite, the platform enables users to upload, categorize, search, sort, and securely share files through a streamlined user experience.
+
+Unlike a basic file upload application, Spacio combines authentication, metadata management, access control, and storage monitoring into a complete storage management solution.
+
+---
 
 ## Key Features
 
-* Secure user authentication
-* File upload and storage management
-* Categorized file organization
-* Advanced file search
-* Storage analytics dashboard
-* Download and management options
-* Responsive modern interface
-* Cloud-based backend powered by Appwrite
+### Secure Passwordless Authentication
 
-## Tech Stack
+* Email-based OTP authentication
+* Passwordless sign-in experience
+* JWT-based session management
+* HttpOnly cookie storage for enhanced security
+* User registration and login flow
+
+### File Storage Management
+
+* Upload files securely to cloud storage
+* Store and manage file metadata
+* Rename uploaded files
+* Delete files permanently
+* View file details and information
+* Open files directly from the platform
+
+### Intelligent File Organization
+
+Files are automatically categorized based on their type:
+
+* Documents
+* Images
+* Videos
+* Audio
+* Others
+
+This metadata-driven categorization enables efficient file management and retrieval.
+
+### Search Functionality
+
+* Server-side search implementation
+* Real-time search experience
+* Debounced search requests to reduce unnecessary API calls
+* Search based on file names stored in metadata
+
+### Dynamic Sorting
+
+Users can sort files based on metadata attributes such as:
+
+* Creation date
+* File name
+* Other supported sorting criteria
+
+Sorting is handled at the database query level for improved performance.
+
+### Secure File Sharing
+
+Users can share files with other users through email-based access control.
+
+Sharing is implemented using:
+
+* User access lists
+* Metadata-driven permissions
+* Query-level visibility control
+
+A user can view a file if:
+
+* They are the owner of the file
+* Their email exists in the file's authorized users list
+
+### Storage Analytics Dashboard
+
+The dashboard provides:
+
+* Total storage usage
+* Category-wise storage distribution
+* Storage visualization charts
+* Recently uploaded files
+* Latest activity overview
+
+---
+
+## System Architecture
+
+### Frontend
 
 * Next.js
+* React
 * TypeScript
-* Appwrite
 * Tailwind CSS
 * Shadcn UI
+
+### Backend Services
+
+* Appwrite Authentication
+* Appwrite Database
+* Appwrite Storage
+
+### Authentication Flow
+
+1. User enters email address
+2. OTP is generated and sent via email
+3. User verifies OTP
+4. Session is created
+5. JWT token is generated
+6. JWT is stored in HttpOnly cookies
+7. Authenticated requests access protected resources
+
+---
+
+## Metadata-Driven Design
+
+Each uploaded file is stored with structured metadata:
+
+```json
+{
+  "name": "resume.pdf",
+  "type": "document",
+  "extension": "pdf",
+  "size": 1024000,
+  "owner": "user_id",
+  "users": ["shared@example.com"],
+  "bucketFileId": "file_id",
+  "url": "file_url"
+}
+```
+
+This metadata model enables:
+
+* Search
+* Sorting
+* Categorization
+* Sharing permissions
+* Analytics generation
+
+---
+
+## Search Implementation
+
+Search functionality is implemented using server-side database queries.
+
+### Workflow
+
+1. User enters search text
+2. Input is debounced for performance optimization
+3. Query is sent to Appwrite
+4. Matching file records are returned
+
+Example query:
+
+```typescript
+Query.contains("name", searchText)
+```
+
+Benefits:
+
+* Reduced client-side processing
+* Faster retrieval
+* Better scalability
+* Cleaner architecture
+
+---
+
+## Sorting Implementation
+
+Sorting is dynamically generated through Appwrite query operators.
+
+Example:
+
+```typescript
+Query.orderAsc("name")
+Query.orderDesc("$createdAt")
+```
+
+Supported sorting options include:
+
+* Name (Ascending)
+* Name (Descending)
+* Date (Newest First)
+* Date (Oldest First)
+
+---
+
+## File Sharing Implementation
+
+Spacio uses metadata-based access control.
+
+Each file stores an array of authorized user emails:
+
+```typescript
+users: ["user1@example.com", "user2@example.com"]
+```
+
+Access is granted when:
+
+```typescript
+owner === currentUser
+```
+
+or
+
+```typescript
+users.includes(currentUser.email)
+```
+
+This approach provides a simple yet effective permission system for collaborative file access.
+
+---
+
+## Storage Analytics
+
+The platform continuously tracks:
+
+* Total storage consumed
+* Storage by category
+* Recent uploads
+* File distribution
+
+Categories monitored:
+
+* Images
+* Documents
+* Videos
+* Audio
+* Others
+
+Analytics are visualized through dashboard charts to improve storage visibility.
+
+---
+
+## Performance Optimizations
+
+### Debounced Search
+
+Search requests are delayed by 300ms before execution.
+
+Benefits:
+
+* Fewer API requests
+* Improved user experience
+* Reduced backend load
+
+### Parallel Data Fetching
+
+Dashboard data is fetched concurrently using:
+
+```typescript
+Promise.all()
+```
+
+Benefits:
+
+* Faster page loading
+* Better responsiveness
+* Reduced wait times
+
+---
+
+## Security Considerations
+
+### Authentication Security
+
+* OTP-based verification
+* Passwordless login
+* JWT session management
+* HttpOnly cookie storage
+
+### Access Control
+
+* Ownership-based permissions
+* Shared-user authorization model
+* Query-level access filtering
+
+---
+
+## Technologies Used
+
+### Frontend
+
+* Next.js
 * React
+* TypeScript
+* Tailwind CSS
+* Shadcn UI
 
-## Learning Outcomes
+### Backend
 
-This project strengthened my understanding of:
+* Appwrite Authentication
+* Appwrite Database
+* Appwrite Storage
 
-* Full-stack web development
-* Authentication and authorization
-* Cloud storage systems
-* Database integration
-* Modern React and Next.js architecture
-* Responsive UI/UX development
-* Type-safe application development with TypeScript
+### Additional Libraries
+
+* React Hook Form
+* Zod
+* use-debounce
+
+---
+
+## Project Highlights
+
+* Full-stack cloud storage platform
+* Passwordless OTP authentication
+* Metadata-driven architecture
+* Server-side search and sorting
+* Permission-based file sharing
+* Storage analytics dashboard
+* JWT-based session management
+* Cloud file storage integration
+
+---
+
+## Future Enhancements
+
+* Role-based access permissions
+* Expiring share links
+* File version history
+* Activity logs
+* Advanced search filters
+* Storage quota management
+* Multi-file upload support
+* Real-time collaboration features
+
+---
+
+## Authors
+
+Developed by JAHNAVI V,ASIN FATHIMA A,CHARU HASENE S K
+
+A full-stack project focused on cloud storage architecture, secure authentication, metadata management, and user-centric file organization.
+
